@@ -115,7 +115,7 @@ protected void startReporting(Method method) {
 {
      System.out.println(browser+" is going to launch");
    if (browser.equalsIgnoreCase("Chrome")) {
-      System.setProperty("webdriver.chrome.driver", usrDirectory+"\\src\\main\\Test\\Chrome74\\chromedriver.exe");
+      System.setProperty("webdriver.chrome.driver", usrDirectory+"\\src\\main\\Drivers\\chromedriver.exe");
       driver = new ChromeDriver();
       log.info(browser+ "browser instance is launching");
    } else if (browser.equalsIgnoreCase("Firefox")) {
