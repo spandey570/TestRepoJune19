@@ -8,6 +8,7 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.util.ArrayList;
 
 public class ExcelUtils {
 
@@ -239,29 +240,38 @@ public class ExcelUtils {
     public static int getColumnIndex(String filePath, String fileName, String sheetName, String columnName) {
         InitializeExcel(filePath, fileName, sheetName);
         sheet = wb.getSheet(sheetName);
-
         row = sheet.getRow(0);
-
         //Create a loop to print cell values in a row
         int j;
         int i=0;
         innerloop:
         for (j = 0; j < row.getLastCellNum(); j++) {
-
-            //Print Excel data in console
-
-            // System.out.print(row.getCell(j).getStringCellValue()+"|| ");
             if (row.getCell(j).getStringCellValue().equalsIgnoreCase(columnName)) {
                 i=j;
                 break innerloop;
-
             }
             else
             {
                 i=-1;
             }
         }
-
         return i;
+    }
+
+    public static ArrayList<String> getColumnValue(String filePath, String fileName, String sheetName, String columnName)
+    {
+        ArrayList<String> colmunVal= new ArrayList<>();
+        //Find Column Index on the basis of Column Name
+        int index= getColumnIndex(filePath,fileName, sheetName,columnName);
+        String value=null;
+        //Find number of rows in excel file
+        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        for (int i = 1; i < rowCount + 1; i++) {
+            row = sheet.getRow(i);
+             value= row.getCell(index).getStringCellValue();
+            colmunVal.add(value);
+        }
+        return colmunVal;
+
     }
 }

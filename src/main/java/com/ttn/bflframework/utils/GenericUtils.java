@@ -1,5 +1,6 @@
 package com.ttn.bflframework.utils;
 
+import com.relevantcodes.extentreports.ExtentTest;
 import org.apache.commons.io.FileUtils;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -14,6 +15,7 @@ import java.util.Calendar;
 import java.util.Properties;
 
 public class GenericUtils {
+
 
     static String usrDirectory= System.getProperty("user.dir");
 
@@ -132,24 +134,16 @@ public class GenericUtils {
     public static String getLinkFromEmail( ) throws MessagingException, InterruptedException {
         String msgBody = getMailContentsUsingTimeout();
         System.out.println("Email message body: " + msgBody);
-        if(msgBody.contains("bfltest-web-client.qa3.tothenew.net/en/reset-password")){
-            return "reset password link found";
 
-        }
         if (msgBody != null) {
-            try {
-                return org.jsoup.Jsoup.parse(msgBody).select("a").first().attr("href");
-            } catch (NullPointerException npe) {
-                try {
-                    return org.jsoup.Jsoup.parse(msgBody).getElementsByAttributeValue("style", "margin-bottom:20px").first().text();
-                } catch (NullPointerException np) {
-                    return org.jsoup.Jsoup.parse(msgBody).select("p").first().text();
-                }
-            }
+            return msgBody;
         } else {
             return "No Email Found Yet";
         }
     }
+
+
+
 
 
 

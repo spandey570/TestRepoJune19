@@ -78,11 +78,8 @@ public class SignInPage {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-         //   String s1= forgotPasswordLink.substring(0,8);
-         //   String s2= forgotPasswordLink.substring(9);
-         //   String resetUrl= s1+username+":"+password+"@"+s2;
             utils.navigateTo(forgotPasswordLink);
-          //  utils.verifyUrlExist("reset-password");
+            utils.verifyUrlExist("reset-password");
 
 
         } catch (MessagingException e) {
