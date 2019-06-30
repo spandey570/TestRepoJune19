@@ -34,6 +34,7 @@ public class VerifyUtils {
         {
             reportTestStepFailure(description, e,takeScreenshot);
             log.info("Assertion Failure: "+e);
+            throw e;
         }
     }
 
@@ -60,11 +61,11 @@ public class VerifyUtils {
             } catch (IOException e1) {
                 e1.printStackTrace();
             }
-            testReport.log(LogStatus.ERROR, description + "<br><b>Failed: </b>"
+            testReport.log(LogStatus.FAIL, description + "<br><b>Failed: </b>"
                     + e.getMessage().replace("\n", "<br>") + "<br><b>Snapshot:</b><br>"
                     + testReport.addScreenCapture(screenshotName));
         } else {
-            testReport.log(LogStatus.ERROR, description + "<br><b>Failed: </b>"
+            testReport.log(LogStatus.FAIL, description + "<br><b>Failed: </b>"
                     + e.getMessage().replace("\n", "<br>"));
         }
     }

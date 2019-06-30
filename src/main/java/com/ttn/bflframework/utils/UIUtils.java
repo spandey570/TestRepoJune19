@@ -5,6 +5,7 @@ import com.relevantcodes.extentreports.LogStatus;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.*;
 import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
 import sun.plugin.util.UIUtil;
 
 import java.io.IOException;
@@ -91,6 +92,7 @@ public class UIUtils {
         {
             log.info("User is redirected to incorrect url: "+currentUrl);
             testReport.log(LogStatus.FAIL,"User is redirected to incorrect url: "+currentUrl);
+            Assert.fail();
         }
     }
 
@@ -174,5 +176,11 @@ public class UIUtils {
     public void navigateTo(String url)
     {
         driver.navigate().to(url);
+    }
+
+    public void refresh()
+    {
+        driver.navigate().refresh();
+        log.info("Refresh the current tab");
     }
 }

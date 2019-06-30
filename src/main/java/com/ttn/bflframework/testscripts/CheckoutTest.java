@@ -6,6 +6,7 @@ import com.ttn.bflframework.utils.UIUtils;
 import com.ttn.bflframework.utils.VerifyUtils;
 import com.ttn.bflframework.utils.WaitUtils;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.io.IOException;
 
@@ -21,14 +22,18 @@ public class CheckoutTest extends BaseUtils {
 
     }
 
+    @Test
     public void checkoutAsRegisteredUser()
     {
-     //   pageObjects.common.countrySelection("Oman");
+
+
+        pageObjects.common.countrySelection("United Arab Emirates");
         pageObjects.home.mouseHoverOnProfileIcon();
         pageObjects.home.clickSignIn();
-    //    pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
-     //   pageObjects.signIn.enterPassword("12345678");
+        pageObjects.signIn.enterUsermail("srikant8@mailnator.com");
+        pageObjects.signIn.enterPassword("12345678");
         pageObjects.signIn.clickSignInBtn();
+
         pageObjects.header.clickNew();
         String details= pageObjects.plp.getFirstProductDescription();
         String price= pageObjects.plp.getFirstProductPrice();
@@ -37,23 +42,31 @@ public class CheckoutTest extends BaseUtils {
         pageObjects.ql.clickOnSeeProductDetails();
         pageObjects.pdp.selectAvailableItemSize();
         pageObjects.pdp.clickAddToCartBtn();
-      //  pageObjects.header.getCartItemCount();
         pageObjects.header.clickOnCart();
-       // pageObjects.cart.verifyCartPageHeading("My Cart1 Item(s)");
-       // pageObjects.cart.verifyProductDescription(details);
-        //pageObjects.cart.verifyProductPrice(price);
+        pageObjects.cart.verifyProductDescription(details);
+        pageObjects.cart.verifyProductPrice(price);
         pageObjects.cart.getItemSize();
         String deliveryOption= pageObjects.cart.getDeliveryType();
         pageObjects.cart.getTotalPrice();
-        //pageObjects.cart.removeItemFromCart();
-        //pageObjects.cart.verifyEmptyCart("Hey it feels so light!");
         pageObjects.cart.clickCheckoutBtn();
-        pageObjects.checkout.enterUsermail("sp@mailnator.com");
-        pageObjects.checkout.enterPassword("12345678");
-        pageObjects.checkout.clickSignIn();
-        pageObjects.checkout.verifyStandardDeliveryOption(deliveryOption);
+     //   pageObjects.checkout.verifyStandardDeliveryOption(deliveryOption);
         pageObjects.checkout.addUserNewAddress();
+        pageObjects.address.enterFirstName("Sri");
+        pageObjects.address.enterLastName("Pandey");
+        pageObjects.address.selectCity();
+        pageObjects.address.selectArea();
+        pageObjects.address.enterFullAddress("Kanpur");
+        pageObjects.address.selectStateCode();
+        pageObjects.address.enterPhoneNumber("1234567");
+        pageObjects.address.selectDefaultAddressChkBox();
+        pageObjects.address.clickShipToAddressBtn();
         pageObjects.checkout.clickContinueBtn();
+        pageObjects.checkout.clickCashOnDeliveryOption();
+        pageObjects.checkout.enterVoucherCode("Disc30");
+        pageObjects.checkout.clickVoucherApplyBtn();
+        pageObjects.checkout.verifyProductDetailsOnCheckout(details);
+        pageObjects.checkout.totalPrice();
+
 
 
     }

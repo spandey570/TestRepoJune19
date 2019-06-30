@@ -25,7 +25,7 @@ public class CommonScenarios {
     private By selectCountry= By.xpath("//*[@class='country_selector']//span[text()='"+country+"']");
     private By currentSelectedCountry= By.xpath("//*[@class='country_selector']//span");
     private By applyButton= By.xpath("//*[@class='country_selector']/..//button");
-    private By closeBtn= By.xpath("");
+    private By closeBtn= By.xpath("//*[@class='cross_btn']");
 
     public void moveBack()
     {
@@ -34,7 +34,7 @@ public class CommonScenarios {
 
     public void countrySelection(String country)
     {
-        wUtils.eWaitForElementVisible(currentSelectedCountry,30);
+        wUtils.eWaitForElementVisible(currentSelectedCountry,90);
         String currentCountry= utils.getText(currentSelectedCountry,"Current selected country");
         if(currentCountry.equalsIgnoreCase(country))
         {

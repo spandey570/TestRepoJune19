@@ -49,7 +49,8 @@ public class SignInPage {
     public void clickSignInBtn() {
         wUtils.eWaitForElementVisible(emailTxt, 30);
         utils.click(signInBtn, "Click on Sign-In button");
-        wUtils.checkForPageLoad(60);
+        wUtils.waitForPageLoad(30);
+     //   wUtils.checkForPageLoad(60);
     }
 
     public void clickForgotPassword() {

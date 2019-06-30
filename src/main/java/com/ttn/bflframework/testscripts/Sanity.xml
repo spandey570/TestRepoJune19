@@ -2,15 +2,26 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
 <suite name="Sanity Test">
 
+    <listeners>
+        <listener class-name="com.ttn.bflframework.utils.RetryListenerClass"/>
+    </listeners>
 
 
-
+    <test name="Test1">
+        <classes>
+            <class name="com.ttn.bflframework.testscripts.SignInTest"/>
+        </classes>
+    </test>
 
     <test name="Test2">
         <classes>
             <class name="com.ttn.bflframework.testscripts.WishlistTest"/>
         </classes>
     </test>
+
+
+
+
 
 
 </suite>

@@ -34,19 +34,19 @@ public class HomePage {
     public void mouseHoverOnProfileIcon()
     {
         wUtils.checkForPageLoad(60);
-        wUtils.eWaitForElementVisible(profileIcon,30);
+        wUtils.eWaitForElementVisible(profileIcon,90);
         utils.mouseHover(profileIcon,"Mouse hover on profile icon");
     }
 
     public void clickSignIn()
     {
-        wUtils.eWaitForElementVisible(signInBtn,30);
+        wUtils.eWaitForElementVisible(signInBtn,90);
         utils.click(signInBtn,"Click on Sign-In ");
     }
 
     public void verifyLoggedInUserName(String expected)
     {
-        wUtils.eWaitForElementVisible(user,30);
+        wUtils.eWaitForElementVisible(user,90);
         String actual= utils.getText(user,"Fetch the logged in user name");
         vUtils.verifyStringEquals(actual,expected,"Verify the logged in user name",true);
     }

@@ -21,7 +21,7 @@ import java.lang.reflect.Method;
 
 public class BaseUtils {
    public WebDriver driver;
-   public ExtentReports extent;
+   public static ExtentReports extent;
    public ExtentTest testReport;
    Logger log = Logger.getLogger(BaseUtils.class);
    public String url;
@@ -34,7 +34,7 @@ public class BaseUtils {
 
 
 
-@BeforeTest
+@BeforeSuite
 public void config()
 {
    //Extent Report Setup in BaseLib
@@ -135,23 +135,13 @@ protected void startReporting(Method method) {
 
 
    @AfterMethod
-protected void reportFailure(ITestResult result, Method method) {
+protected void reportClosure(Method method) {
    String testName = this.getClass().getSimpleName() + " : " + method.getName();
-   if (result.getStatus() == ITestResult.FAILURE) {
-      try {
-           String screenshotName = GenericUtils.takeScreenshot(driver);
-         testReport.log(LogStatus.FAIL, "<b>Test case failed with exception: </b><br>" +
-                 result.getThrowable().toString().replace("\n", "<br>") +
-                 "<br><b>Snapshot:</b><br>" + testReport.addScreenCapture(screenshotName));
-      } catch (Exception e) {
-         log.error("Unable to add screenshot to reports");
-      }
-   } else if (result.getStatus() == ITestResult.SKIP) {
-      testReport.log(LogStatus.SKIP, "<b>Test case skipped with message: </b>" + result.getThrowable());
-   }
    System.out.println(">>>>> Execution ended: " + testName);
    testReport.log(LogStatus.INFO, "Test execution completed.");
    extent.endTest(testReport);
+  // extent.flush();
+
 }
    @AfterClass(enabled = true)
 
