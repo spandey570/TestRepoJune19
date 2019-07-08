@@ -26,7 +26,7 @@ public class AddressPage {
     private By fullAddress = By.name(ExcelUtils.getCellValue(filePath, fileName, sheetName, "fullAddress", "Locator"));
     private By stateCode = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "stateCode", "Locator"));
     private By phoneNumber = By.name(ExcelUtils.getCellValue(filePath, fileName, sheetName, "phoneNumber", "Locator"));
-    private By setAsDefaultAddressChkBox = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "setAsDefaultAddressChkBox", "Locator"));
+    private By setAsDefaultAddressChkBox = By.name(ExcelUtils.getCellValue(filePath, fileName, sheetName, "setAsDefaultAddressChkBox", "Locator"));
     private By shipToAddressBtn = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "shipToAddressBtn", "Locator"));
     private By cancelBtn = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "cancelBtn", "Locator"));
     private By selectedStateCode = By.xpath(ExcelUtils.getCellValue(filePath, fileName, sheetName, "selectedStateCode", "Locator"));

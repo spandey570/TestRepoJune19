@@ -1,11 +1,15 @@
 package com.ttn.bflframework.utils;
 
 
+import com.applitools.eyes.selenium.Eyes;
+import com.applitools.eyes.selenium.StitchMode;
 import com.relevantcodes.extentreports.ExtentTest;
 import com.relevantcodes.extentreports.LogStatus;
+import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.openqa.selenium.WebDriver;
 import org.testng.Assert;
+import sun.nio.ch.IOUtil;
 
 
 import java.io.IOException;
@@ -34,7 +38,8 @@ public class VerifyUtils {
         {
             reportTestStepFailure(description, e,takeScreenshot);
             log.info("Assertion Failure: "+e);
-            throw e;
+            Assert.fail();
+
         }
     }
 
@@ -67,6 +72,50 @@ public class VerifyUtils {
         } else {
             testReport.log(LogStatus.FAIL, description + "<br><b>Failed: </b>"
                     + e.getMessage().replace("\n", "<br>"));
+        }
+    }
+
+
+    public void verifyPageUI(String apiKey,String appName,String testName,String windowName)
+    {
+        Eyes eyes = new Eyes();
+        eyes.setApiKey(apiKey);
+
+        try {
+            eyes.open(driver, appName, testName);
+            eyes.setForceFullPageScreenshot(true);
+            eyes.setStitchMode(StitchMode.CSS);
+            eyes.checkWindow(windowName);
+            eyes.close();
+            testReport.log(LogStatus.PASS,testName);
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+        finally {
+            eyes.abortIfNotClosed();
+        }
+    }
+
+    public void validatePDF(String apiKey,String filepath,String description)
+    {
+        String command = String.format("java -jar D:\\pdfValidation\\ImageTester.jar -k %s -f %s",apiKey,filepath);
+        try {
+            Process proc = Runtime.getRuntime().exec(command);
+            proc.waitFor();
+            String result = IOUtils.toString(proc.getInputStream(), "UTF-8");
+            System.out.println(result);
+            if(result.contains("Mismatch"))
+            {
+                testReport.log(LogStatus.FAIL,description+" : "+result);
+            }
+            else
+            {
+                testReport.log(LogStatus.PASS,description);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 }

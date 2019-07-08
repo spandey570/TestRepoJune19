@@ -63,5 +63,15 @@ public class CommonScenarios {
 
     }
 
+    public void visualValidation(String apiKey,String appName, String testName, String windowName)
+    {
+        vUtils.verifyPageUI(apiKey,appName,testName,windowName);
+    }
+
+    public void pdfValidation(String apiKey,String filepath,String description)
+    {
+        vUtils.validatePDF(apiKey,filepath,description);
+    }
+
 
 }

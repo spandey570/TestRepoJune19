@@ -67,6 +67,7 @@ public class ProductDetailPage {
     }
 
     public void selectAvailableItemSize() {
+        wUtils.eWaitForElementVisible(sizeList,30);
         boolean sizeStaus = utils.isElementPresent(sizeList, "Check the visibility of product size element");
         if (sizeStaus == true) {
             wUtils.eWaitForElementVisible(sizeList, 30);
