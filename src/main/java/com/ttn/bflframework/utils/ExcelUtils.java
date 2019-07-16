@@ -5,7 +5,9 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.*;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ExcelUtils {
 
@@ -164,9 +166,6 @@ public class ExcelUtils {
 
             for (int j = 0; j < row.getLastCellNum(); j++) {
 
-                //Print Excel data in console
-
-                // System.out.print(row.getCell(j).getStringCellValue()+"|| ");
                 if (row.getCell(j).getStringCellValue().equalsIgnoreCase(primaryKey)) {
 
                     break outerloop;
@@ -255,15 +254,27 @@ public class ExcelUtils {
         //Find Column Index on the basis of Column Name
         int index = getColumnIndex(filePath, fileName, sheetName, columnName);
         String value = null;
+
         //Find number of rows in excel file
         int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
         for (int i = 1; i < rowCount + 1; i++) {
             row = sheet.getRow(i);
-            value = row.getCell(index).getStringCellValue();
-            colmunVal.add(value);
-        }
-        return colmunVal;
+            Cell cell = row.getCell(index);
 
+            if (DateUtil.isCellDateFormatted(cell)) {
+
+                Date dateValue = cell.getDateCellValue();
+                System.out.println(dateValue);
+                SimpleDateFormat sdf = new SimpleDateFormat();
+                String date = sdf.format(dateValue);
+                colmunVal.add(date);
+            } else {
+                cell.setCellType(CellType.STRING);
+                value = cell.getStringCellValue();
+                colmunVal.add(value);
+            }
+            }
+        return colmunVal;
     }
 
     public static int getRowCount(String filePath, String fileName, String sheetName) throws IOException {
@@ -282,17 +293,14 @@ public class ExcelUtils {
 
     public static int getColumnCount(String filePath, String fileName, String sheetName, int rowCount) throws IOException {
 
-        //   int rowCount = getRowCount(filePath, fileName, sheetName);
         row = null;
-        //Create a loop over all the rows of excel file to read it
 
         for (int i = 0; i < rowCount + 1; i++) {
 
             row = sheet.getRow(i);
 
-            //Create a loop to print cell values in a row
 
-            //   return row.getLastCellNum();
+
         }
         return row.getLastCellNum();
     }
@@ -310,8 +318,6 @@ public class ExcelUtils {
                 //Print Excel data in console
 
                 Cell cell = row.getCell(j);
-
-
                 cell.setCellType(CellType.STRING);
                 value= cell.getStringCellValue();
                 val.add(value);
@@ -322,4 +328,37 @@ public class ExcelUtils {
         }
         return val;
     }
+
+    public static int getRowNumber(String filePath, String fileName, String sheetName, String data){
+
+        InitializeExcel(filePath, fileName, sheetName);
+
+        //Read sheet inside the workbook by its name
+
+        sheet = wb.getSheet(sheetName);
+        //Find number of rows in excel file
+
+        int rowCount = sheet.getLastRowNum() - sheet.getFirstRowNum();
+        int i;
+        outerloop:
+        for (i = 0; i < rowCount + 1; i++) {
+
+            row = sheet.getRow(i);
+
+            for (int j = 0; j < row.getLastCellNum(); j++) {
+
+                Cell cell = row.getCell(j);
+                cell.setCellType(CellType.STRING);
+
+                if (cell.getStringCellValue().equalsIgnoreCase(data)) {
+
+                    break outerloop;
+                }
+            }
+        }
+
+        return i;
+    }
+
+
 }
