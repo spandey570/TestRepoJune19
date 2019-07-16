@@ -50,16 +50,13 @@ public class CommonScenarios {
 
     public void  verifyDomain(String domain){
          String currentUrl= utils.getUrl();
-        try {
+
             String defaultUrl= GenericUtils.getDataFromConfig("url");
             String s1= defaultUrl.substring(0,8);
             String s2= defaultUrl.substring(31);
             String expectedUrl= s1+domain+s2+GenericUtils.getDataFromConfig("language");
             String actualUrl= utils.getUrl();
             vUtils.verifyStringEquals(actualUrl,expectedUrl,"Verify that user is on "+expectedUrl,true);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
     }
 

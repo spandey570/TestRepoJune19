@@ -20,6 +20,7 @@ public class PageClassObjects {
      public CartPage cart;
      public CheckoutPage checkout;
      public AddressPage address;
+     public ResetPasswordPage resetpass;
 
      public PageClassObjects(UIUtils utils, WaitUtils wUtils, VerifyUtils vUtils) throws IOException {
          home= new HomePage(utils,wUtils,vUtils);
@@ -33,6 +34,7 @@ public class PageClassObjects {
          cart= new CartPage(utils,wUtils,vUtils);
          checkout= new CheckoutPage(utils,wUtils,vUtils);
          address= new AddressPage(utils,wUtils,vUtils);
+         resetpass= new ResetPasswordPage(utils,wUtils,vUtils);
      }
 
 }

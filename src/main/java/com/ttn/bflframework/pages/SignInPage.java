@@ -73,12 +73,10 @@ public class SignInPage {
 
             wUtils.iWaitForMinutes(2);
             forgotPasswordLink = GenericUtils.getLinkFromEmail();
-            try {
+
               username=  GenericUtils.getDataFromConfig("securityUserName");
               password= GenericUtils.getDataFromConfig("securityPassword");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+
             utils.navigateTo(forgotPasswordLink);
             utils.verifyUrlExist("reset-password");
 

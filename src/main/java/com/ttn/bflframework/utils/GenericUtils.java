@@ -11,23 +11,34 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.security.SecureRandom;
 import java.util.Calendar;
 import java.util.Properties;
+import java.util.Random;
 
 public class GenericUtils {
 
 
     static String usrDirectory= System.getProperty("user.dir");
 
-    public static String getDataFromConfig(String key) throws IOException {
+    public static String getDataFromConfig(String key) {
 
         Properties prop = new Properties();
         File f = new File(usrDirectory+"\\src\\main\\resources\\config.properties");
 
-        FileInputStream fip = new FileInputStream(f);
+        FileInputStream fip = null;
+        try {
+            fip = new FileInputStream(f);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
 
-         prop.load(fip);
-         String value= prop.getProperty(key);
+        try {
+            prop.load(fip);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        String value= prop.getProperty(key);
          return value;
     }
 
@@ -97,30 +108,32 @@ public class GenericUtils {
             }
 
             //each polling counter takes around 4sec to complete traverse of recent 10 mails
-            // while (polling < 500) {
-            System.out.println("Retrieve the messages from the folder in an array. Polling " + polling);
-            Message[] mailList = new Message[0];
-            try {
-                mailList = inbox.getMessages();
-            } catch (MessagingException e1) {
-                e1.printStackTrace();
-            }
+             while (polling < 500) {
+                 System.out.println("Retrieve the messages from the folder in an array. Polling " + polling);
+                 Message[] mailList = new Message[0];
+                 try {
+                     mailList = inbox.getMessages();
+                 } catch (MessagingException e1) {
+                     e1.printStackTrace();
+                 }
 
-            for (int i = mailList.length - 1; i > mailList.length - 100; i--) {
-                Message message = mailList[i];
-                if (message.getSubject().contains("reset your password") &&
-                        message.getReceivedDate().toString().contains(Calendar.getInstance().getTime().toString().substring(0, 10))) {
+                 for (int i = mailList.length - 1; i > mailList.length - 100; i--) {
+                     Message message = mailList[i];
+                     if (message.getSubject().contains("reset your password") &&
+                             message.getReceivedDate().toString().contains(Calendar.getInstance().getTime().toString().substring(0, 10))) {
+                         System.out.println(message.getReceivedDate().toString());
+                         System.out.println(Calendar.getInstance().getTime().toString().substring(0, 10));
+                         System.out.println("Got email successfully. " + message.getSubject());
+                         System.out.println("Subject: " + message.getSubject());
 
-                    System.out.println("Got email successfully. " + message.getSubject());
-                    System.out.println("Subject: " + message.getSubject());
 
+                         return getMessageBody(message);
+                     }
 
-                    return getMessageBody(message);
-                }
-
-                Thread.sleep(2000);
-                polling += 1;
-            }
+                     Thread.sleep(2000);
+                     polling += 1;
+                 }
+             }
             System.out.println("close the store and folder objects");
             inbox.close(true);
             store.close();
@@ -142,9 +155,15 @@ public class GenericUtils {
         }
     }
 
-
-
-
-
-
+    public static String generateAlphaNumericValue(int length)
+    {
+        String SOURCE = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        SecureRandom secureRnd = new SecureRandom();
+        Random ran = new Random();
+        StringBuilder sb = new StringBuilder(length);
+        for (int i = 0; i < length; i++)
+            sb.append(SOURCE.charAt(secureRnd.nextInt(SOURCE.length())));
+        return sb.toString();
     }
+
+}

@@ -103,8 +103,13 @@ public class CartPage {
 
     public void removeItemFromCart()
     {
-        wUtils.eWaitForElementVisible(closeButton,30);
-        utils.click(closeButton,"Click on close(x)button to remove the item from the cart page");
+        wUtils.eWaitForElementVisible(emptyCart,30);
+        String actual= utils.getText(emptyCart,"Empty cart message");
+        if(!actual.equalsIgnoreCase("Hey it feels so light!"))
+        {
+            wUtils.eWaitForElementVisible(closeButton,30);
+            utils.click(closeButton,"Click on close(x)button to remove the item from the cart page");
+        }
     }
 
     public String getDeliveryType()

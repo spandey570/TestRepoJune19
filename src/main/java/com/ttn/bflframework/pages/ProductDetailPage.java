@@ -61,10 +61,6 @@ public class ProductDetailPage {
         utils.click(addToCartBtn,"Click on Add To Cart Button");
     }
 
-    public void verifyPDPUrlExist()
-    {
-        utils.verifyUrlExist("product-detail");
-    }
 
     public void selectAvailableItemSize() {
         wUtils.eWaitForElementVisible(sizeList,30);

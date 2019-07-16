@@ -34,6 +34,9 @@ public class CheckoutTest extends BaseUtils {
         pageObjects.signIn.enterPassword("12345678");
         pageObjects.signIn.clickSignInBtn();
 
+        pageObjects.header.clickOnCart();
+        pageObjects.cart.removeItemFromCart();
+
         pageObjects.header.clickNew();
         String details= pageObjects.plp.getFirstProductDescription();
         String price= pageObjects.plp.getFirstProductPrice();

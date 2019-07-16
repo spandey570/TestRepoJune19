@@ -99,7 +99,6 @@ public class WishlistTest extends BaseUtils {
         pageObjects.plp.mousehoverOnFirstProduct();
         pageObjects.plp.clickQuickLookBtn();
         pageObjects.ql.clickOnSeeProductDetails();
-        pageObjects.pdp.verifyPDPUrlExist();
         pageObjects.pdp.verifyProductDetailsOnPDP(details);
         pageObjects.pdp.selectAvailableItemSize();
         pageObjects.pdp.addItemToWishlist();

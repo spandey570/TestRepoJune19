@@ -39,6 +39,16 @@ public class ForgotPasswordTest extends BaseUtils {
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
+        pageObjects.resetpass.enterNewPassword("123456");
+        pageObjects.resetpass.enterConfirmPassword("123456");
+        pageObjects.resetpass.clickSubmitBtn();
+        pageObjects.resetpass.verifyResetPasswordUrl("registration/thank-you/");
+        pageObjects.resetpass.clickSignInBtn();
+        pageObjects.signIn.enterUsermail("srikant.pandey@tothenew.com");
+        pageObjects.signIn.enterPassword("123456");
+        pageObjects.signIn.clickSubmitBtn();
+
+
 
 
     }
