@@ -68,7 +68,7 @@ public class BaseUtils {
 
     @BeforeMethod()
 
-    public void setUpMultiInstance(Method method) throws IOException {
+    public void setUpInstance(Method method) throws IOException {
 
             browserkey = GenericUtils.getDataFromConfig("browser");
             driverInitilization(method,browserkey);
@@ -86,7 +86,7 @@ public class BaseUtils {
                 case "DEV":
                     return "https://bflweb:bflwebttn14@@www.bfl-web-client.qa3.tothenew.net/" + GenericUtils.getDataFromConfig("language");
                 case "UAT":
-                    return "https:/bflweb:bflwebttn14@@/bfluat-web-client.qa3.tothenew.net/" + GenericUtils.getDataFromConfig("language");
+                    return "https://uae.brandsforlessuae.com/" + GenericUtils.getDataFromConfig("language");
 
                 default:
                     return GenericUtils.getDataFromConfig("url");
@@ -154,15 +154,24 @@ public class BaseUtils {
 
 
         @AfterMethod
-        protected void reportClosure (Method method){
-            String testName = this.getClass().getSimpleName() + " : " + method.getName();
+        protected void reportFailure(ITestResult result,Method method) {
+            String testName = this.getClass().getSimpleName() + " : " + method.getName() + " : ";
+            if (result.getStatus() == ITestResult.FAILURE) {
+                try {
+                    String screenshotName = GenericUtils.takeScreenshot(driver);
+                    testReport.log(LogStatus.FAIL, "<b>Test case failed with exception: </b><br>" +
+                            result.getThrowable().toString().replace("\n", "<br>") +
+                            "<br><b>Snapshot:</b><br>" + testReport.addScreenCapture(screenshotName));
+                } catch (Exception e) {
+                    log.error("Unable to add screenshot to reports");
+                }
+            } else if (result.getStatus() == ITestResult.SKIP) {
+                testReport.log(LogStatus.SKIP, "<b>Test case skipped with message: </b>" + result.getThrowable());
+            }
             System.out.println(">>>>> Execution ended: " + testName);
             testReport.log(LogStatus.INFO, "Test execution completed.");
             extent.endTest(testReport);
-
-
         }
-
 
         @AfterMethod()
 

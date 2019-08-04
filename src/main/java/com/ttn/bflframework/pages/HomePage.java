@@ -44,10 +44,10 @@ public class HomePage {
         utils.click(signInBtn,"Click on Sign-In ");
     }
 
-    public void verifyLoggedInUserName(String expected)
+    public String getUserName()
     {
         wUtils.eWaitForElementVisible(user,90);
         String actual= utils.getText(user,"Fetch the logged in user name");
-        vUtils.verifyStringEquals(actual,expected,"Verify the logged in user name",true);
+        return actual;
     }
 }

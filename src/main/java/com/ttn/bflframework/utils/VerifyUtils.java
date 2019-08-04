@@ -37,8 +37,8 @@ public class VerifyUtils {
         catch (AssertionError e)
         {
             reportTestStepFailure(description, e,takeScreenshot);
-            log.info("Assertion Failure: "+e);
-            Assert.fail();
+            log.info("Assertion Failure: "+e.getMessage());
+            Assert.fail(e.getMessage());
 
         }
     }
